@@ -1,7 +1,12 @@
 package Main;
 
 public class Game {
-    public static void main(String[] args) {
-        GamePanel gamePanel = new GamePanel();
+    private GamePanel gamePanel;
+    private GameWindow gameWindow;
+
+    public Game() {
+        gamePanel = new GamePanel();
+        gameWindow = new GameWindow(gamePanel);
     }
+
 }

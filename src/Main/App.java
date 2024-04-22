@@ -1,7 +1,8 @@
 package Main;
 
 public class App {
-    public static void main(String[] args) throws Exception {
-        System.out.println("opened from github repository");
+    public static void main(String[] args) {
+        new Game();
+        
     }
 }

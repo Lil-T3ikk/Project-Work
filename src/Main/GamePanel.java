@@ -1,14 +1,16 @@
 package Main;
 
-public class GamePanel() extends JPanel {
+import java.awt.Graphics;
 
+import javax.swing.JPanel;
 
-    public GamePanel() {
+public class GamePanel extends JPanel{
 
-    }
+    public GamePanel() {}
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-    }
 
+        g.fillRect(32, 32, 128, 128);
+    }
 }
