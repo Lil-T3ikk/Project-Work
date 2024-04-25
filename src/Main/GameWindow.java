@@ -12,6 +12,7 @@ public class GameWindow {
         jFrame.setResizable(false);
         jFrame.setTitle("2D Game");
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        jFrame.setLocationRelativeTo(null);
         jFrame.add(gamePanel);
         jFrame.setVisible(true);
     }

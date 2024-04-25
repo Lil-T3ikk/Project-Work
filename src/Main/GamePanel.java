@@ -1,16 +1,57 @@
 package Main;
 
 import java.awt.Graphics;
+import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
+import Inputs.KeyboardInputs;
+import Inputs.MouseInputs;
 
 public class GamePanel extends JPanel{
 
-    public GamePanel() {}
+    private MouseInputs mouseInputs;
+    private int xDelta = 32, yDelta = 32;
+
+    public GamePanel() {
+        mouseInputs = new MouseInputs(this);
+        addKeyListener(new KeyboardInputs(this));
+        addMouseListener(mouseInputs);
+        addMouseMotionListener(mouseInputs);
+    }
+
+    public void changeXDelta(int value) {
+        if (xDelta >= 0 && xDelta <= 512) {
+            xDelta += value;
+            repaint();
+        }
+        
+    }
+
+    public void followMouse(int x, int y) {
+        
+        if (x >= 512) {
+            this.xDelta = 512;
+        }else {
+            this.xDelta = x;
+        }
+        if (y >= 512) {
+            this.yDelta = 512;
+        }else {
+            this.yDelta = y;
+        }
+        repaint();
+    }
+
+    public void changeYDelta(int value) {
+        if (yDelta >= 0 && yDelta <= 512) {
+            yDelta += value;
+            repaint();
+        }
+    }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        g.fillRect(32, 32, 128, 128);
+        g.fillRect(0 + xDelta, 0 + yDelta, 128, 128);
     }
 }
