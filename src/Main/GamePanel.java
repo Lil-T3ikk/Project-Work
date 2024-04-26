@@ -11,20 +11,14 @@ public class GamePanel extends JPanel{
 
     private MouseInputs mouseInputs;
     private int xDelta = 32, yDelta = 32;
+    private double frames = 0;
+    private long lastCheck = 0;
 
     public GamePanel() {
         mouseInputs = new MouseInputs(this);
         addKeyListener(new KeyboardInputs(this));
         addMouseListener(mouseInputs);
         addMouseMotionListener(mouseInputs);
-    }
-
-    public void changeXDelta(int value) {
-        if (xDelta >= 0 && xDelta <= 512) {
-            xDelta += value;
-            repaint();
-        }
-        
     }
 
     public void followMouse(int x, int y) {
@@ -42,9 +36,30 @@ public class GamePanel extends JPanel{
         repaint();
     }
 
-    public void changeYDelta(int value) {
-        if (yDelta >= 0 && yDelta <= 512) {
+    public void goUp(int value) {
+        if (yDelta >= 32) {
+            yDelta -= value;
+            repaint();
+        }
+    }
+
+    public void goDown(int value) {
+        if (yDelta <= 448) {
             yDelta += value;
+            repaint();
+        }
+    }
+
+    public void goRight(int value) {
+        if (xDelta <= 480) {
+            xDelta += value;
+            repaint();
+        }
+    }
+
+    public void goLeft(int value) {
+        if (xDelta >= 32) {
+            xDelta -= value;
             repaint();
         }
     }
@@ -53,5 +68,12 @@ public class GamePanel extends JPanel{
         super.paintComponent(g);
 
         g.fillRect(0 + xDelta, 0 + yDelta, 128, 128);
+
+        frames++;
+        if (System.currentTimeMillis() - lastCheck >= 1000) {
+            lastCheck = System.currentTimeMillis();
+            System.out.println("FPS: " + frames);
+            frames = 0;
+        }
     }
 }

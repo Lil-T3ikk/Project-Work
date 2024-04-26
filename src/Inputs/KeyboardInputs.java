@@ -22,17 +22,19 @@ public class KeyboardInputs implements KeyListener {
     public void keyPressed(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_A:
-                gamePanel.changeXDelta(-32);
+                gamePanel.goLeft(32);
                 break;
             case KeyEvent.VK_D:
-                gamePanel.changeXDelta(32);
+                gamePanel.goRight(32);
+                break;
             case KeyEvent.VK_W:
-                gamePanel.changeYDelta(-32);
+                gamePanel.goUp(32);
                 break;
             case KeyEvent.VK_S:
-                gamePanel.changeYDelta(32);
+                gamePanel.goDown(32);
                 break;
             default:
+                System.out.println("NIGGA");
                 break;
         }
     }
