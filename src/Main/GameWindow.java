@@ -3,17 +3,19 @@ package Main;
 import javax.swing.JFrame;
 
 public class GameWindow {
-    private JFrame jFrame;
+	private JFrame jframe;
 
-    public GameWindow(GamePanel gamePanel) {
-        jFrame = new JFrame();
+	public GameWindow(GamePanel gamePanel) {
 
-        jFrame.setSize(640, 640);
-        jFrame.setResizable(false);
-        jFrame.setTitle("2D Game");
-        jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jFrame.setLocationRelativeTo(null);
-        jFrame.add(gamePanel);
-        jFrame.setVisible(true);
-    }
+		jframe = new JFrame();
+
+		jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		jframe.add(gamePanel);
+		jframe.setLocationRelativeTo(null);
+		jframe.setResizable(false);
+		jframe.pack();
+		jframe.setVisible(true);
+
+	}
+
 }

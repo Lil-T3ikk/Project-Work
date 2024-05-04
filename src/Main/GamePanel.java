@@ -1,79 +1,77 @@
 package Main;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-import Inputs.KeyboardInputs;
-import Inputs.MouseInputs;
 
-public class GamePanel extends JPanel{
+import inputs.KeyboardInputs;
+import inputs.MouseInputs;
 
-    private MouseInputs mouseInputs;
-    private int xDelta = 32, yDelta = 32;
-    private double frames = 0;
-    private long lastCheck = 0;
+public class GamePanel extends JPanel {
 
-    public GamePanel() {
-        mouseInputs = new MouseInputs(this);
-        addKeyListener(new KeyboardInputs(this));
-        addMouseListener(mouseInputs);
-        addMouseMotionListener(mouseInputs);
-    }
+	private MouseInputs mouseInputs;
+	private float xDelta = 100, yDelta = 100;
+	private BufferedImage img, subImg;
 
-    public void followMouse(int x, int y) {
-        
-        if (x >= 512) {
-            this.xDelta = 512;
-        }else {
-            this.xDelta = x;
-        }
-        if (y >= 512) {
-            this.yDelta = 512;
-        }else {
-            this.yDelta = y;
-        }
-        repaint();
-    }
+	public GamePanel() {
 
-    public void goUp(int value) {
-        if (yDelta >= 32) {
-            yDelta -= value;
-            repaint();
-        }
-    }
+		mouseInputs = new MouseInputs(this);
 
-    public void goDown(int value) {
-        if (yDelta <= 448) {
-            yDelta += value;
-            repaint();
-        }
-    }
+		importImg();
 
-    public void goRight(int value) {
-        if (xDelta <= 480) {
-            xDelta += value;
-            repaint();
-        }
-    }
+		setPanelSize();
+		addKeyListener(new KeyboardInputs(this));
+		addMouseListener(mouseInputs);
+		addMouseMotionListener(mouseInputs);
 
-    public void goLeft(int value) {
-        if (xDelta >= 32) {
-            xDelta -= value;
-            repaint();
-        }
-    }
+	}
 
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
+	private void importImg() {
+		InputStream is = getClass().getResourceAsStream("/player_sprites.png");
 
-        g.fillRect(0 + xDelta, 0 + yDelta, 128, 128);
+		try {
+			img = ImageIO.read(is);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-        frames++;
-        if (System.currentTimeMillis() - lastCheck >= 1000) {
-            lastCheck = System.currentTimeMillis();
-            System.out.println("FPS: " + frames);
-            frames = 0;
-        }
-    }
+	}
+
+	private void setPanelSize() {
+		Dimension size = new Dimension(1280, 800);
+		setMinimumSize(size);
+		setPreferredSize(size);
+		setMaximumSize(size);
+
+	}
+
+	public void changeXDelta(int value) {
+		this.xDelta += value;
+
+	}
+
+	public void changeYDelta(int value) {
+		this.yDelta += value;
+
+	}
+
+	public void setRectPos(int x, int y) {
+		this.xDelta = x;
+		this.yDelta = y;
+	}
+
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+
+		subImg = img.getSubimage(1 * 64, 8 * 40, 64, 40);
+		g.drawImage(subImg, (int) xDelta, (int) yDelta, 128, 80, null);
+
+	}
+
 }
